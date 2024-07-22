@@ -9,9 +9,9 @@ class ContactScreen extends StatefulWidget {
 
 class _ContactScreenState extends State<ContactScreen> {
   final TextEditingController _messageController = TextEditingController();
-  final String supportEmail = 'abhijithsajju@gmail.com'; // Replace with your email address
-  final String smtpServerUsername = 'abhijithsajju@gmail.com'; // Replace with your SMTP server username
-  final String smtpServerPassword = 'bzdo fril luhh mjex'; // Replace with your App Password
+  final String supportEmail = ''; // Replace with your email address
+  final String smtpServerUsername = ''; // Replace with your SMTP server username
+  final String smtpServerPassword = ''; // Replace with your App Password
 
   Future<void> _sendEmail(String message) async {
     final smtpServer = SmtpServer(
