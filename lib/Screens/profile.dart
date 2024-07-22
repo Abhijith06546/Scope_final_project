@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   Future<void> _fetchUserData() async {
     final url = Uri.https(
-        'scopefinalproject-8f078-default-rtdb.firebaseio.com', 'users/${widget.user.uid}.json');
+        'add own link', 'users/${widget.user.uid}.json');
 
     try {
       final response = await http.get(url);
