@@ -20,7 +20,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Future<bool> _checkUserCredentials(String email, String password) async {
     final url = Uri.https(
-        'scopefinalproject-8f078-default-rtdb.firebaseio.com', 'users.json');
+        'add won link', 'users.json');
 
     try {
       final response = await http.get(url);
