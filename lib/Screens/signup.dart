@@ -23,7 +23,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _saveUserData(String uid) async {
     final url = Uri.https(
-        'scopefinalproject-8f078-default-rtdb.firebaseio.com', 'users/$uid.json');
+        'add own link', 'users/$uid.json');
 
     try {
       final response = await http.put(
