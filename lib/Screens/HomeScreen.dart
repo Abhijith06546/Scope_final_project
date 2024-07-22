@@ -4,7 +4,7 @@ import 'package:scopefinalproject/Screens/Course.dart';
 import 'package:scopefinalproject/Screens/login.dart';
 import 'package:scopefinalproject/screens/about.dart';
 import 'package:scopefinalproject/screens/contact.dart';
-import 'package:scopefinalproject/Screens/profile.dart'; // Create this new screen
+import 'package:scopefinalproject/Screens/profile.dart'; 
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -189,45 +189,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ),
-                  Container(
-                    height: 200,
-                    color: Colors.blue,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            'images/image1.png', // Replace with your image path
-                            width: 150,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            'images/image2.png', // Replace with your image path
-                            width: 150,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            'images/image3.png', // Replace with your image path
-                            width: 150,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset(
-                            'images/image4.png', // Replace with your image path
-                            width: 150,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ],
                     ),
                   ),
                 ],
