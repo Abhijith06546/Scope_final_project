@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:scopefinalproject/Screens/HomeScreen.dart';
+import 'package:scopefinalproject/Screens/login.dart';
 import 'package:scopefinalproject/reuseablewidgets/reusabel-widget.dart';
-import 'package:scopefinalproject/utils/color_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -51,112 +51,107 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: const Text(
-          "Sign Up",
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              hexStringToColor("CB2B93"),
-              hexStringToColor("9546C4"),
-              hexStringToColor("5E61F4"),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue[900],
+        title: Center(
+          child: Image.asset(
+            'images/scope-india-logo-bird.png',
+            height: 60,
           ),
         ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
-            child: Column(
-              children: <Widget>[
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter UserName",
-                  Icons.person_outline,
-                  false,
-                  _userNameTextController,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter Email Id",
-                  Icons.person_outline,
-                  false,
-                  _emailTextController,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter Password",
-                  Icons.lock_outlined,
-                  true,
-                  _passwordTextController,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter Age",
-                  Icons.cake,
-                  false,
-                  _ageTextController,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter Date of Birth",
-                  Icons.calendar_today,
-                  false,
-                  _dobTextController,
-                ),
-                const SizedBox(height: 20),
-                reusableTextField(
-                  "Enter State",
-                  Icons.location_on,
-                  false,
-                  _stateTextController,
-                ),
-                const SizedBox(height: 20),
-                firebaseUIButton(context, "Sign Up", () async {
-                  try {
-                    // Register user in Firebase Authentication
-                    UserCredential userCredential = await FirebaseAuth.instance
-                        .createUserWithEmailAndPassword(
-                        email: _emailTextController.text,
-                        password: _passwordTextController.text);
+      ),
+      resizeToAvoidBottomInset: true,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus(); // Dismiss the keyboard
+        },
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage('images/homescreenbg.jpeg'),
+                  fit: BoxFit.cover)),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(20, 120, 20, 0),
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(height: 20),
+                  reusableTextField(
+                    "Enter UserName",
+                    Icons.person_outline,
+                    false,
+                    _userNameTextController,
+                  ),
+                  const SizedBox(height: 20),
+                  reusableTextField(
+                    "Enter Email Id",
+                    Icons.person_outline,
+                    false,
+                    _emailTextController,
+                  ),
+                  const SizedBox(height: 20),
+                  reusableTextField(
+                    "Enter Password",
+                    Icons.lock_outlined,
+                    true,
+                    _passwordTextController,
+                  ),
+                  const SizedBox(height: 20),
+                  reusableTextField(
+                    "Enter Age",
+                    Icons.cake,
+                    false,
+                    _ageTextController,
+                  ),
+                  const SizedBox(height: 20),
+                  reusableTextField(
+                    "Enter Date of Birth",
+                    Icons.calendar_today,
+                    false,
+                    _dobTextController,
+                  ),
+                  const SizedBox(height: 20),
+                  reusableTextField(
+                    "Enter State",
+                    Icons.location_on,
+                    false,
+                    _stateTextController,
+                  ),
+                  const SizedBox(height: 20),
+                  firebaseUIButton(context, "Sign Up", () async {
+                    try {
+                      // Register user in Firebase Authentication
+                      UserCredential userCredential = await FirebaseAuth.instance
+                          .createUserWithEmailAndPassword(
+                          email: _emailTextController.text,
+                          password: _passwordTextController.text);
 
-                    // Save user data to Realtime Database
-                    _saveUserData(userCredential.user!.uid);
+                      // Save user data to Realtime Database
+                      _saveUserData(userCredential.user!.uid);
 
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Created New Account"),
-                        duration: Duration(seconds: 5),
-                      ),
-                    );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Created New Account"),
+                          duration: Duration(seconds: 5),
+                        ),
+                      );
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                    );
-                  } catch (e) {
-                    print("Error ${e.toString()}");
-                  }
-                }),
-
-
-              ],
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignInScreen()),
+                      );
+                    } catch (e) {
+                      print("Error ${e.toString()}");
+                    }
+                  }),
+                ],
+              ),
             ),
           ),
         ),

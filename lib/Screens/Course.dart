@@ -56,6 +56,7 @@ class _CourseScreenState extends State<CourseScreen> {
   Future<void> _updateUserCourses(String uid, String courseName) async {
     final url = Uri.https(
         'scopefinalproject-8f078-default-rtdb.firebaseio.com', 'users/$uid.json');
+    //points to the specific area in our database
 
     try {
       final response = await http.get(url);
@@ -63,10 +64,13 @@ class _CourseScreenState extends State<CourseScreen> {
         final userData = json.decode(response.body);
 
         List<String> joinedCourses = userData['joinedCourses'] != null
+        // to check joined course key not null
             ? List<String>.from(userData['joinedCourses'])
             : [];
-        // this  converts the existing list from the userData map into a new List<String>. This ensures that the list is of the correct type and creates a copy of the original list.
+        // this will convert the existing list from the userData map into a new List<String>.
+        // and creates a copy of the original list.
         if (!joinedCourses.contains(courseName)) {
+          //negation check if not available in list
           joinedCourses.add(courseName);
         }
 
@@ -74,10 +78,13 @@ class _CourseScreenState extends State<CourseScreen> {
           url,
           headers: {
             'Content-Type': 'application/json',
+            //server to expect JSON formatted data.
           },
           body: json.encode({
             ...userData,
+            // tell server that it includes all the existing key-value pairs from userdata
             'joinedCourses': joinedCourses,
+            //contains the data that will be updated on the server.
           }),
         );
 
@@ -98,67 +105,80 @@ class _CourseScreenState extends State<CourseScreen> {
   Widget build(BuildContext context) {
     final user = FirebaseAuth.instance.currentUser;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Courses'),
-        backgroundColor: Colors.blue,
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: ListView.builder(
-          itemCount: courses.length,
-          itemBuilder: (context, index) {
-            final course = courses[index];
-            return Container(
-              margin: EdgeInsets.only(bottom: 16.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(8.0),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    spreadRadius: 2,
-                    blurRadius: 8,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: ListTile(
-                contentPadding: EdgeInsets.all(16.0),
-                title: Text(
-                  course['name']!,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18.0,
-                  ),
-                ),
-                subtitle: Text(
-                  course['description']!,
-                  style: TextStyle(
-                    fontSize: 14.0,
-                  ),
-                ),
-                trailing: ElevatedButton(
-                  onPressed: user == null
-                      ? () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Please log in to join a course."),
-                        duration: Duration(seconds: 3),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.blue[900],
+          title: Center(child: Image.asset('images/scope-india-logo-bird.png',
+            height: 50,
+          )),
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('images/homescreenbg.jpeg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: ListView.builder(
+              itemCount: courses.length,
+              itemBuilder: (context, index) {
+                final course = courses[index];
+                return Container(
+                  margin: EdgeInsets.only(bottom: 16.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(8.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 8,
+                        offset: Offset(0, 2),
                       ),
-                    );
-                  }
-                      : () {
-                    _joinCourse(course['name']!);
-                  },
-                  child: Text('Join Now'),
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 12.0),
+                    ],
                   ),
-                ),
-              ),
-            );
-          },
+                  child: ListTile(
+                    contentPadding: EdgeInsets.all(16.0),
+                    title: Text(
+                      course['name']!,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                    subtitle: Text(
+                      course['description']!,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                      ),
+                    ),
+                    trailing: ElevatedButton(
+                      onPressed: user == null
+                          ? () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("Please log in to join a course."),
+                            duration: Duration(seconds: 3),
+                          ),
+                        );
+                      }
+                          : () {
+                        _joinCourse(course['name']!);
+                      },
+                      child: Text('Join Now'),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal: 12.0),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
         ),
       ),
     );

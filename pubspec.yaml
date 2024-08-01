@@ -42,6 +42,11 @@ dependencies:
   http: ^1.2.2
   mailer: ^6.1.1
   firebase_database: ^11.0.3
+  carousel_slider: ^4.2.1
+  google_fonts: ^6.2.1
+  webview_flutter: ^4.8.0
+  flutter_html: ^3.0.0-beta.2
+  cached_network_image: ^3.3.1
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +79,22 @@ flutter:
      - images/iso_iaflogo.png
      - images/scope-india-logo-bird.png
      - images/scopeindia-title.png
+     - images/stars.png
+     - images/Devops-training-scopeindia.jpg
+     - images/scope-india-azure-certification-course.jpg
+     - images/scope-india-digital-marketing-course.jpg
+     - images/scope-india-dotnet-core-full-stack-course.jpg
+     - images/scope-india-full-stack-intermediate-offer-sep2022-2 (1).jpg
+     - images/scope-india-java-full-stack-course (1).jpg
+     - images/scope-india-mean-mern-stack-course.jpg
+     - images/scope-india-python-full-stack-course (1).jpg
+     - images/placement_background.jpg
+     - images/homescreenbg.jpeg
+     - images/snowpark-skis-headerbg2.jpg
+     - images/training.png
+     - images/grooming.png
+     - images/internship.png
+     - images/placement.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

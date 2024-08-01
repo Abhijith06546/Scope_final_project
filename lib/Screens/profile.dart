@@ -25,8 +25,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final url = Uri.https(
         'scopefinalproject-8f078-default-rtdb.firebaseio.com', 'users/${widget.user.uid}.json');
 
+    // constructs a URL that is used to access a specific resource in our FirebaseRDB.
+
     try {
       final response = await http.get(url);
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
         setState(() {
@@ -42,68 +46,85 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: userData == null
-          ? Center(child: CircularProgressIndicator())
-          : Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            // User Details
-            Card(
-              elevation: 4.0,
-              margin: EdgeInsets.symmetric(vertical: 8.0),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('User Information', style: Theme.of(context).textTheme.headline6),
-                    SizedBox(height: 8.0),
-                    _buildUserInfoRow('Username:', userData!['username']),
-                    _buildUserInfoRow('Email:', userData!['email']),
-                    _buildUserInfoRow('Age:', userData!['age'].toString()),
-                    _buildUserInfoRow('Date of Birth:', userData!['dob']),
-                    _buildUserInfoRow('State:', userData!['state']),
-                  ],
-                ),
-              ),
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.indigo[900],
+          title: Center(
+            child: Image.asset(
+              'images/scope-india-logo-bird.png',
+              height: 50,
             ),
-            SizedBox(height: 20),
-            // Joined Courses
-            Card(
-              elevation: 4.0,
-              margin: EdgeInsets.symmetric(vertical: 8.0),
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Joined Courses', style: Theme.of(context).textTheme.headline6),
-                    SizedBox(height: 8.0),
-                    userData!['joinedCourses'] != null && userData!['joinedCourses'].isNotEmpty
-                        ? DataTable(
-                      columns: [
-                        DataColumn(label: Text('Course Name')),
+          ),
+        ),
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('images/homescreenbg.jpeg'),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: userData == null
+              ? Center(child: CircularProgressIndicator())
+              : Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ListView(
+              children: [
+                // User Details
+                Card(
+                  elevation: 4.0,
+                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('User Information', style: Theme.of(context).textTheme.headline6),
+                        SizedBox(height: 8.0),
+                        _buildUserInfoRow('Username:', userData!['username']),
+                        _buildUserInfoRow('Email:', userData!['email']),
+                        _buildUserInfoRow('Age:', userData!['age'].toString()),
+                        _buildUserInfoRow('Date of Birth:', userData!['dob']),
+                        _buildUserInfoRow('State:', userData!['state']),
                       ],
-                      rows: List.generate(
-                        (userData!['joinedCourses'] as List).length,
-                            (index) => DataRow(
-                          cells: [
-                            DataCell(Text(userData!['joinedCourses'][index])),
-                          ],
-                        ),
-                      ),
-                    )
-                        : Text('No courses joined yet.'),
-                  ],
+                    ),
+                  ),
                 ),
-              ),
+                SizedBox(height: 20),
+                // Joined Courses
+                Card(
+                  elevation: 4.0,
+                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Joined Courses'),
+                        SizedBox(height: 8.0),
+                        userData!['joinedCourses'] != null && userData!['joinedCourses'].isNotEmpty
+                            ? DataTable(
+                          columns: [
+                            DataColumn(label: Text('Course Name')),
+                          ],
+                          rows: List.generate(
+                            (userData!['joinedCourses'] as List).length,
+                                (index) => DataRow(
+                              cells: [
+                                DataCell(Text(userData!['joinedCourses'][index])),
+                              ],
+                            ),
+                          ),
+                        )
+                            : Text('No courses joined yet.'),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

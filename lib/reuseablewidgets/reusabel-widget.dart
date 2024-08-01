@@ -65,3 +65,35 @@ Container firebaseUIButton(BuildContext context, String title, Function onTap) {
     ),
   );
 }
+
+Container buildButton(BuildContext context, String text, Widget screen, Color color) {
+  return Container(
+    width: 300,
+    padding: EdgeInsets.all(10),
+    decoration: BoxDecoration(
+      color: color,
+      borderRadius: BorderRadius.circular(8),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 5,
+          offset: Offset(0, 3),
+        ),
+      ],
+    ),
+    child: TextButton(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => screen),
+        );
+      },
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 16, color: Colors.white),
+      ),
+    ),
+  );
+}
+
